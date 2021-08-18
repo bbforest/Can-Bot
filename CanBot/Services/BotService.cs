@@ -3,12 +3,12 @@ using Discord.Commands;
 using System;
 using System.Text;
 using System.Threading.Tasks;
-using PartyBot.Handlers;
+using CanBot.Handlers;
 using System.Linq;
 using System.Collections.Generic;
 using Victoria;
 
-namespace PartyBot.Services
+namespace CanBot.Services
 {
     public sealed class BotService
     {
@@ -35,7 +35,7 @@ namespace PartyBot.Services
                 ThumbnailUrl = context.Guild.IconUrl,
                 Timestamp = DateTime.UtcNow,
                 Color = Color.DarkOrange,
-                Footer = new EmbedFooterBuilder { Text = "Powered By DraxCodes PartyBot & Victoria", IconUrl = context.Client.CurrentUser.GetAvatarUrl() },
+                Footer = new EmbedFooterBuilder { Text = "Powered By DraxCodes CanBot & Victoria", IconUrl = context.Client.CurrentUser.GetAvatarUrl() },
                 Fields = fields
             });
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace PartyBot.DataStructs
+namespace CanBot.DataStructs
 {
     public class BotConfig
     {

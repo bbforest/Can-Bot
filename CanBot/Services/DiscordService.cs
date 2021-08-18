@@ -2,12 +2,12 @@
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
-using PartyBot.Handlers;
+using CanBot.Handlers;
 using System;
 using System.Threading.Tasks;
 using Victoria;
 
-namespace PartyBot.Services
+namespace CanBot.Services
 {
     public class DiscordService
     {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PartyBot.Services
+namespace CanBot.Services
 {
     /* A Static Logging Service So it Can Be Used Throughout The Whole Bot Anywhere We Want. */
     public static class LoggingService

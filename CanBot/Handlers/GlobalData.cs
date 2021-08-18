@@ -1,13 +1,13 @@
 ﻿using Discord;
 using Newtonsoft.Json;
-using PartyBot.DataStructs;
-using PartyBot.Services;
+using CanBot.DataStructs;
+using CanBot.Services;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PartyBot.Handlers
+namespace CanBot.Handlers
 {
     public class GlobalData
     {

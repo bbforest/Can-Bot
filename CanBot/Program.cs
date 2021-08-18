@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using PartyBot.Services;
+using CanBot.Services;
 
-namespace PartyBot
+namespace CanBot
 {
     class Program
     {

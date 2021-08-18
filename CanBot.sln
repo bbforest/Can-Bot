@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2035
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PartyBot", "PartyBot\PartyBot.csproj", "{D8F8E3AA-8B1E-4DC7-9D35-6B82E822B43F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CanBot", "CanBot\CanBot.csproj", "{D8F8E3AA-8B1E-4DC7-9D35-6B82E822B43F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

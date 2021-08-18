@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PartyBot.Modules
+namespace CanBot.Modules
 {
     public class TestModule : ModuleBase<SocketCommandContext>
     {

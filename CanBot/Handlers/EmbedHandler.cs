@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PartyBot.Handlers
+namespace CanBot.Handlers
 {
     public static class EmbedHandler
     {
@@ -17,17 +17,17 @@ namespace PartyBot.Handlers
                 .WithTitle(title)
                 .WithDescription(description)
                 .WithColor(color)
-                .WithCurrentTimestamp().Build()));
+                .WithFooter("에케봇 By.파란대나무숲", "https://i.imgur.com/fWGVv2K.png").Build()));
             return embed;
         }
 
         public static async Task<Embed> CreateErrorEmbed(string source, string error)
         {
             var embed = await Task.Run(() => new EmbedBuilder()
-                .WithTitle($"ERROR OCCURED FROM - {source}")
-                .WithDescription($"**Error Deaitls**: \n{error}")
+                .WithTitle($"오류! - {source}")
+                .WithDescription($"**오류내용**: \n{error}")
                 .WithColor(Color.DarkRed)
-                .WithCurrentTimestamp().Build());
+                .WithFooter("에케봇 By.파란대나무숲", "https://i.imgur.com/fWGVv2K.png").Build());
             return embed;
         }
     }

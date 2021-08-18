@@ -1,8 +1,8 @@
 
 .vs/*
-PartyBot/obj/*
-PartyBot/bin/*
+CanBot/obj/*
+CanBot/bin/*
 *.json
-/PartyBot/LavaLink/*
-/PartyBot/Properties/*
-PartyBot/PartyBot.csproj.user
+/CanBot/LavaLink/*
+/CanBot/Properties/*
+CanBot/CanBot.csproj.user

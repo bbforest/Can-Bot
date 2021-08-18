@@ -7,7 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace PartyBot.Handlers
+namespace CanBot.Handlers
 {
     public class CommandHandler
     {

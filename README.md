@@ -1,65 +1,40 @@
-# PartyBot [![Build status](https://ci.appveyor.com/api/projects/status/bi3vs4lpl1c02i38?svg=true)](https://ci.appveyor.com/project/joelp53/party-bot) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5c5f7aec386d495587b60546f9659d42)](https://www.codacy.com/app/joelp53/Party-Bot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=joelp53/Party-Bot&amp;utm_campaign=Badge_Grade)
+# [깡통이 CanBot](https://bbforest.net/can.html)
 
-### A Simple Discord Music Bot Designed For Medium Sized Servers.
+### 디스코드 한글 노래봇<br>Discord Korean song bot
 
-## Built With
+[코로나 현황](https://github.com/bbforest/COVID19-status)과 네이버 웹툰 순위 확인 기능이 추가되어 있습니다.
 
-* [DotNet Core (Version - 3.1)](https://dotnet.microsoft.com/download/dotnet-core/2.2) - Dotnet version.
-* [Discord.Net (Version - 2.1.1)](https://github.com/RogueException/Discord.Net) - The Discord Library used
-* [Victoria (Version - 5.1.2)](https://github.com/Yucked/Victoria) - LavaLink Library.
+## 명령어
+!자세한 기능은 봇에서 **ㅇ도움말**을 입력해서 확인하세요!
 
-## Use this as a template to build off
+* 봇 기능
+	* **ㅇ도움말** 봇을 사용하는 방법을 알려줘요.
+	* **ㅇ코로나** 현재 국내 코로나 현황을 보여줘요.
+	* **ㅇ웹툰** 오늘 가장 인기있는 네이버 웹툰 5개를 보여줘요.
 
-### NOTE: This Requires At-Least C# Version 8.0
+* 음악 관련
+	* **ㅇ입장** 통화방에 입장해요.
+	* **ㅇ퇴장** 통화방에서 퇴장해요.
+	* **ㅇ재생** <검색어> 유튜브에서 검색된 노래를 재생해요. 재생중인 노래가 있다면 예약해요.
+	* **ㅇ목록** 예약된 목록을 보여줘요.
+	* **ㅇ정지** 노래를 잠시 멈추거나 다시 재생해요.
+	* **ㅇ넘기기** 다음 노래를 재생해요.
+	* **ㅇ음량 <1-150>** 음량을 조절해요.
+	* **ㅇ초기화** 재생중인 노래와 목록을 초기화해요.
 
-1. First Make sure you have a fork of this repo. (Makes it easier for you to then commit your own changes to your GitHub)
-2. Next you will need to clone your forked repo onto your P.C.
-3. Once it's on your machine you will want to run the command: ``dotnet restore`` (Do this in your prefered Terminal)
+## 사용된 패키지
+* [DotNet Core (Version - 5.0)](https://dotnet.microsoft.com/download/dotnet-core/5.0)
+* [Discord.Net (Version - 2.1.1)](https://github.com/RogueException/Discord.Net)
+* [Victoria (Version - 5.1.8)](https://github.com/Yucked/Victoria)
+* [NSoup (Version - 0.8.0)](https://www.nuget.org/packages/NSoup)
 
-**Note: Make sure you do this in the same directory that ``PartyBot.sln`` is stored.** It should look something like this when done.
+## 제3자 고지
+MIT License
 
-```terminal
-foo@bar:~$ dotnet restore
-  Restoring packages for C:\Users\YOURNAME\source\repos\PartyBot\PartyBot\PartyBot.csproj...
-  Installing Microsoft.NETCore.DotNetAppHost 2.0.0.
-  Installing Microsoft.Extensions.DependencyInjection.Abstractions 2.0.0.
-  Installing Microsoft.NETCore.DotNetHostResolver 2.0.0.
-  Installing Microsoft.NETCore.DotNetHostPolicy 2.0.0.
-  Installing NETStandard.Library 2.0.0.
-  Installing Microsoft.NETCore.App 2.0.0.
-  Generating MSBuild file C:\Users\YOURNAME\source\repos\PartyBot\PartyBot\obj\PartyBot.csproj.nuget.g.props.
-  Generating MSBuild file C:\Users\YOURNAME\source\repos\PartyBot\PartyBot\obj\PartyBot.csproj.nuget.g.targets.
-  Restore completed in 4.94 sec for C:\Users\YOURNAME\source\repos\PartyBot\PartyBot\PartyBot.csproj.
-foo@bar:~$
-```
+Copyright (c) 2018 Joel Parkinson
 
-4. Just to be safe we'll also do ``dotnet build`` which should output like so:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-```terminal
-foo@bar:~$ dotnet build
-Microsoft (R) Build Engine version 15.9.20+g88f5fadfbe for .NET Core
-Copyright (C) Microsoft Corporation. All rights reserved.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-  Restore completed in 74.91 ms for C:\Users\YOURNAME\source\repos\PartyBot\PartyBot\PartyBot.csproj.
-  PartyBot -> C:\Users\YOURNAME\source\repos\PartyBot\PartyBot\bin\Debug\netcoreapp2.0\PartyBot.dll
-
-Build succeeded.
-    0 Warning(s)
-    0 Error(s)
-
-Time Elapsed 00:00:01.41
-```
-
-5. You can now open the .sln file with Visual Studio or open the folder structure in your prefered IDE/Text Editor.
-
-## Authors
-
-* **Draxis (Me)** - *Initial work* - [Drax](https://github.com/joelp53/)
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Yucked for Victoria.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
