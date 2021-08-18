@@ -2,7 +2,7 @@
 
 ### 디스코드 한글 노래봇<br>Discord Korean song bot
 
-[코로나 현황](https://github.com/bbforest/COVID19-status)과 네이버 웹툰 순위 확인 기능이 추가되어 있습니다.
+[코로나 현황](https://github.com/bbforest/CSharp-scraping)과 [네이버 웹툰 순위](https://github.com/bbforest/CSharp-scraping) 기능이 추가되어 있습니다.
 
 ## 명령어
 !자세한 기능은 봇에서 **ㅇ도움말**을 입력해서 확인하세요!
@@ -27,14 +27,3 @@
 * [Discord.Net (Version - 2.1.1)](https://github.com/RogueException/Discord.Net)
 * [Victoria (Version - 5.1.8)](https://github.com/Yucked/Victoria)
 * [NSoup (Version - 0.8.0)](https://www.nuget.org/packages/NSoup)
-
-## 제3자 고지
-MIT License
-
-Copyright (c) 2018 Joel Parkinson
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
