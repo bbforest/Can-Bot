@@ -94,7 +94,8 @@ namespace CanBot.Handlers
                 return;
 
             /* the command failed, let's notify the user that something happened. */
-            await context.Channel.SendMessageAsync($"error: {result}");
+            if (result.ToString().EndsWith("few parameters.")) await context.Channel.SendMessageAsync("필수값 오류! 옵션을 입력해주세요!");
+            else await context.Channel.SendMessageAsync($"error: {result}");
         }
 
         /*Used whenever we want to log something to the Console. 

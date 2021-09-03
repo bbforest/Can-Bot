@@ -389,6 +389,7 @@ namespace CanBot.Services
             string p = GlobalData.Config.DefaultPrefix;
             return await EmbedHandler.CreateBasicEmbed("도움말", $"**봇 기능**\n``{p}도움말`` 봇을 사용하는 방법을 알려줘요." +
                 $"\n``{p}코로나`` 현재 국내 코로나 현황을 보여줘요.\n``{p}웹툰`` 오늘 가장 인기있는 네이버 웹툰 5개를 보여줘요." +
+                $"\n``{p}급식 <학교>`` 오늘의 급식을 알려줘요!" +
                 $"\n\n**음악 관련**\n``{p}입장`` 통화방에 입장해요.\n``{p}퇴장`` 통화방에서 퇴장해요.\n``{p}재생 <검색어>`` 유튜브에서 검색된 노래를 재생해요. 재생중인 노래가 있다면 예약해요." +
                 $"\n``{p}목록`` 예약된 목록을 보여줘요.\n``{p}정지`` 노래를 잠시 멈추거나 다시 재생해요.\n``{p}넘기기`` 다음 노래를 재생해요.\n``{p}음량 <1-150>`` 음량을 조절해요." +
                 $"\n``{p}초기화`` 재생중인 노래와 목록을 초기화해요.", Color.Blue);
@@ -457,6 +458,25 @@ namespace CanBot.Services
                 $"\n3. [{title[2]} - {author[2]}](https://comic.naver.com{url[2]})" +
                 $"\n4. [{title[3]} - {author[3]}](https://comic.naver.com{url[3]})" +
                 $"\n5. [{title[4]} - {author[4]}](https://comic.naver.com{url[4]})", Color.Blue);
+        }
+
+        public async Task<Embed> Eat(string school_str)
+        {
+            Document doc = NSoupClient.Parse(new Uri($"https://open.neis.go.kr/hub/schoolInfo?KEY=fe74198d943c4019b9f1a01de4feaae7&SCHUL_NM={school_str}"), 5000);
+            string edu = doc.Select("ATPT_OFCDC_SC_CODE").Text;
+            string school = doc.Select("SD_SCHUL_CODE").Text;
+
+            string date = DateTime.Now.ToString("yyyyMMdd");
+            doc = NSoupClient.Parse(new Uri($"https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=fe74198d943c4019b9f1a01de4feaae7&ATPT_OFCDC_SC_CODE={edu}&SD_SCHUL_CODE={school}&MLSV_YMD={date}"), 5000);
+            Elements datas = doc.Select("row");
+            string eat_result="";
+            foreach (Element data in datas)
+            {
+                eat_result += $"**{data.Select("MMEAL_SC_NM").Text}**\n" +
+                    $"{data.Select("DDISH_NM").Text.Replace("<br/>", "\n")}\n\n";
+            }
+            if (eat_result == "") return await EmbedHandler.CreateErrorEmbed("급식정보", $"{school_str}에 대한 오늘 급식정보를 찾지 못 했어요.");
+            return await EmbedHandler.CreateBasicEmbed($"{doc.Select("SCHUL_NM").Eq(0).Text} 급식정보", eat_result, Color.Blue);
         }
     }
 }

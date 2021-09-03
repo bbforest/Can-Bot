@@ -76,5 +76,10 @@ namespace CanBot.Modules
         [Alias("웹툰", "만화", "webtoon", "comics")]
         public async Task Webtoon()
             => await ReplyAsync(embed: await AudioService.Webtoon());
+
+        [Command("eat")]
+        [Alias("급식")]
+        public async Task Eat(string school)
+            => await ReplyAsync(embed: await AudioService.Eat(school));
     }
 }
