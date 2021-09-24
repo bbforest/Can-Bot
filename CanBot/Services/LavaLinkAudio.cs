@@ -384,18 +384,31 @@ namespace CanBot.Services
             await args.Player.PlayAsync(track);
             //await args.Player.TextChannel.SendMessageAsync(embed: await EmbedHandler.CreateBasicEmbed("재생시작", $"[{track.Title}]({track.Url})", Color.Blue));
         }
-        public async Task<Embed> Help()
+
+        public async Task<Embed> Fun(string cmd, string option = "")
         {
-            string p = GlobalData.Config.DefaultPrefix;
-            return await EmbedHandler.CreateBasicEmbed("도움말", $"**봇 기능**\n``{p}도움말`` 봇을 사용하는 방법을 알려줘요." +
-                $"\n``{p}코로나`` 현재 국내 코로나 현황을 보여줘요.\n``{p}웹툰`` 오늘 가장 인기있는 네이버 웹툰 5개를 보여줘요." +
-                $"\n``{p}급식 <학교>`` 오늘의 급식을 알려줘요!" +
-                $"\n\n**음악 관련**\n``{p}입장`` 통화방에 입장해요.\n``{p}퇴장`` 통화방에서 퇴장해요.\n``{p}재생 <검색어>`` 유튜브에서 검색된 노래를 재생해요. 재생중인 노래가 있다면 예약해요." +
-                $"\n``{p}목록`` 예약된 목록을 보여줘요.\n``{p}정지`` 노래를 잠시 멈추거나 다시 재생해요.\n``{p}넘기기`` 다음 노래를 재생해요.\n``{p}음량 <1-150>`` 음량을 조절해요." +
-                $"\n``{p}초기화`` 재생중인 노래와 목록을 초기화해요.", Color.Blue);
+            switch (cmd)
+            {
+                case "Help":
+                    string p = GlobalData.Config.DefaultPrefix;
+                    return await EmbedHandler.CreateBasicEmbed("도움말", $"**봇 기능**\n``{p}도움말`` 봇을 사용하는 방법을 알려줘요." +
+                        $"\n``{p}코로나`` 현재 국내 코로나 현황을 보여줘요.\n``{p}웹툰`` 오늘 가장 인기있는 네이버 웹툰 5개를 보여줘요." +
+                        $"\n``{p}급식 <학교>`` 오늘의 급식을 알려줘요!" +
+                        $"\n\n**음악 관련**\n``{p}입장`` 통화방에 입장해요.\n``{p}퇴장`` 통화방에서 퇴장해요.\n``{p}재생 <검색어>`` 유튜브에서 검색된 노래를 재생해요. 재생중인 노래가 있다면 예약해요." +
+                        $"\n``{p}목록`` 예약된 목록을 보여줘요.\n``{p}정지`` 노래를 잠시 멈추거나 다시 재생해요.\n``{p}넘기기`` 다음 노래를 재생해요.\n``{p}음량 <1-150>`` 음량을 조절해요." +
+                        $"\n``{p}초기화`` 재생중인 노래와 목록을 초기화해요.", Color.Blue);
+                case "COVID":
+                    return await EmbedHandler.CreateBasicEmbed("**실시간 국내 코로나 현황**", COVID(), Color.Blue);
+                case "Webtoon":
+                    return await EmbedHandler.CreateBasicEmbed("**오늘의 웹툰 순위**", Webtoon(), Color.Blue);
+                case "Eat":
+                    return await EmbedHandler.CreateBasicEmbed($"{option} 급식 정보", Eat(option), Color.Blue);
+                default:
+                    return await EmbedHandler.CreateErrorEmbed("시스템", $"{GlobalData.Config.DefaultPrefix}도움말 을 입력해 사용법을 알아보세요.");
+            }
         }
 
-        public async Task<Embed> Corona()
+        static string COVID()
         {
             WebClient wc = new WebClient() { Encoding = Encoding.UTF8 };
             JObject json = JObject.Parse(wc.DownloadString("https://apiv2.corona-live.com/domestic-init.json"));
@@ -433,50 +446,67 @@ namespace CanBot.Services
             var sec_day = string.Format("{0:#,###}", Convert.ToInt32(doc.Select("secondCnt").Eq(0).Text));
             var sec_sum = string.Format("{0:#,###}", Convert.ToInt32(doc.Select("secondCnt").Eq(2).Text));
 
-            return await EmbedHandler.CreateBasicEmbed("실시간 국내 코로나 현황", $"오늘 실시간 : {today}명" +
+            return $"실시간 국내 코로나 현황\n오늘 실시간 : {today}명" +
                 $"\n\n0시 기준\n확진환자 : {current[0]}{current[1]}\n치료중 : {hos}{hos2}\n격리해제 : {recovered[0]}{recovered[1]}" +
                 $"\n사망자 : {die[0]}{die[1]}" +
-                $"\n\n백신 접종 현황\n1차 접종 : {fir_sum}(+{fir_day})\n2차 접종 : {sec_sum}(+{sec_day})", Color.Blue);
+                $"\n\n백신 접종 현황\n1차 접종 : {fir_sum}(+{fir_day})\n2차 접종 : {sec_sum}(+{sec_day})";
         }
 
-        public async Task<Embed> Webtoon()
+        static string Webtoon()
         {
+            //네이버 웹툰에서 오늘 해당 요일 웹툰 스크래핑
             Document doc = NSoupClient.Parse(new Uri("https://m.comic.naver.com/webtoon/weekday"), 5000);
             Elements datas = doc.Select("div.section_list_toon ul.list_toon li");
 
+            //요일 확인
             string day = doc.Select("div.area_sublnb.lnb_weekday h3.blind").Text;
+            //제목, 작가, URL 각 5개 선언
             string[] title = new string[5], author = new string[5], url = new string[5];
+            //제목, 작가, URL 5번 불러오기
             for (int i = 0; i < 5; i++)
             {
                 title[i] = datas.Eq(i).Select("div.info strong.title").Text;
                 author[i] = datas.Eq(i).Select("div.info span.author").Text;
                 url[i] = datas.Eq(i).Select("a").Attr("href");
             }
-            return await EmbedHandler.CreateBasicEmbed($"{day} 웹툰 순위",
+
+            //출력
+            return $"{day} 웹툰 순위" +
                 $"\n1. [{title[0]} - {author[0]}](https://comic.naver.com{url[0]})" +
                 $"\n2. [{title[1]} - {author[1]}](https://comic.naver.com{url[1]})" +
                 $"\n3. [{title[2]} - {author[2]}](https://comic.naver.com{url[2]})" +
                 $"\n4. [{title[3]} - {author[3]}](https://comic.naver.com{url[3]})" +
-                $"\n5. [{title[4]} - {author[4]}](https://comic.naver.com{url[4]})", Color.Blue);
+                $"\n5. [{title[4]} - {author[4]}](https://comic.naver.com{url[4]})";
         }
 
-        public async Task<Embed> Eat(string school_str)
+        static string Eat(string school_str)
         {
+            //학교 번호, 교육청 코드 API 호출
             Document doc = NSoupClient.Parse(new Uri($"https://open.neis.go.kr/hub/schoolInfo?KEY=fe74198d943c4019b9f1a01de4feaae7&SCHUL_NM={school_str}"), 5000);
             string edu = doc.Select("ATPT_OFCDC_SC_CODE").Text;
             string school = doc.Select("SD_SCHUL_CODE").Text;
 
+            //급식 API 호출
             string date = DateTime.Now.ToString("yyyyMMdd");
             doc = NSoupClient.Parse(new Uri($"https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=fe74198d943c4019b9f1a01de4feaae7&ATPT_OFCDC_SC_CODE={edu}&SD_SCHUL_CODE={school}&MLSV_YMD={date}"), 5000);
             Elements datas = doc.Select("row");
-            string eat_result="";
+
+            //등록된 급식 수만큼 호출(조식,중식,석식 등)
+            string eat_result = "";
             foreach (Element data in datas)
             {
                 eat_result += $"**{data.Select("MMEAL_SC_NM").Text}**\n" +
                     $"{data.Select("DDISH_NM").Text.Replace("<br/>", "\n")}\n\n";
             }
-            if (eat_result == "") return await EmbedHandler.CreateErrorEmbed("급식정보", $"{school_str}에 대한 오늘 급식정보를 찾지 못 했어요.");
-            return await EmbedHandler.CreateBasicEmbed($"{doc.Select("SCHUL_NM").Eq(0).Text} 급식정보", eat_result, Color.Blue);
+            if (eat_result == "")
+            {
+                if (DateTime.Now.DayOfWeek == DayOfWeek.Saturday || DateTime.Now.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    return "주말에는 급식이 없어용";
+                }
+                return $"{school_str}에 대한 오늘 급식정보를 찾지 못 했어요.";
+            }
+            return $"{doc.Select("SCHUL_NM").Eq(0).Text} 급식정보\n" + eat_result;
         }
     }
 }

@@ -65,21 +65,21 @@ namespace CanBot.Modules
         [Command("help")]
         [Alias("도움말", "도움")]
         public async Task Help()
-            => await ReplyAsync(embed: await AudioService.Help());
+            => await ReplyAsync(embed: await AudioService.Fun("Help"));
 
         [Command("corona")]
         [Alias("코로나", "covid", "코로나19", "covid19", "corona")]
         public async Task Corona()
-            => await ReplyAsync(embed: await AudioService.Corona());
+            => await ReplyAsync(embed: await AudioService.Fun("COVID"));
 
         [Command("comic")]
         [Alias("웹툰", "만화", "webtoon", "comics")]
         public async Task Webtoon()
-            => await ReplyAsync(embed: await AudioService.Webtoon());
+            => await ReplyAsync(embed: await AudioService.Fun("Webtoon"));
 
         [Command("eat")]
         [Alias("급식")]
         public async Task Eat(string school)
-            => await ReplyAsync(embed: await AudioService.Eat(school));
+            => await ReplyAsync(embed: await AudioService.Fun("Eat", school));
     }
 }
