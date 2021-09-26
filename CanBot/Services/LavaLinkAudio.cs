@@ -403,6 +403,8 @@ namespace CanBot.Services
                     return await EmbedHandler.CreateBasicEmbed("**오늘의 웹툰 순위**", Webtoon(), Color.Blue);
                 case "Eat":
                     return await EmbedHandler.CreateBasicEmbed($"{option} 급식 정보", Eat(option), Color.Blue);
+                case "TV":
+                    return await EmbedHandler.CreateBasicEmbed($"현재 방송중인 지상파 편성표", TV(), Color.Blue);
                 default:
                     return await EmbedHandler.CreateErrorEmbed("시스템", $"{GlobalData.Config.DefaultPrefix}도움말 을 입력해 사용법을 알아보세요.");
             }
@@ -507,6 +509,35 @@ namespace CanBot.Services
                 return $"{school_str}에 대한 오늘 급식정보를 찾지 못 했어요.";
             }
             return $"{doc.Select("SCHUL_NM").Eq(0).Text} 급식정보\n" + eat_result;
+        }
+
+        static string TV()
+        {
+            //네이버 검색에서 편성표 스크래핑
+            Document doc = NSoupClient.Parse(new Uri("https://m.search.naver.com/search.naver?query=%ED%8E%B8%EC%84%B1%ED%91%9C"), 5000);
+            Elements datas = doc.Select("li.program_item.on");
+
+            //리턴 문자열 선언
+            string str_return = "";
+            //방송사 파싱을 위한 int 선언
+            int i = 0;
+
+            foreach (var data in datas)
+            {
+                //url과 프로그램 이름 선택
+                string url = data.Select(".pr_name").Attr("href"), name = data.Select(".pr_name").Text;
+
+                //url 비어있으면 프로그램 이름 검색
+                if (url == "") url = "http://search.naver.com/search.naver?query=" + name.Replace(" ", "%20");
+                //url 있으면 검색 url
+                else url = "http://search.naver.com/search.naver?" + url.Substring(url.IndexOf("query="));
+
+                //리턴 문자열 넣기
+                str_return += $"{doc.Select("span.els").Eq(i).Text} [{name}]({url})\n";
+                i++;
+            }
+
+            return str_return;
         }
     }
 }
