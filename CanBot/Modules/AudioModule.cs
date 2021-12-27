@@ -86,5 +86,10 @@ namespace CanBot.Modules
         [Alias("티비", "편성", "편성표", "지상파", "방송")]
         public async Task TV()
             => await ReplyAsync(embed: await AudioService.Fun("TV"));
+
+        [Command("mc")]
+        [Alias("마크", "화리")]
+        public async Task MC_WL(string nickname)
+            => await ReplyAsync(embed: await AudioService.MC_WL(Context.Guild, nickname));
     }
 }

@@ -16,6 +16,8 @@ using Newtonsoft.Json.Linq;
 using System.Net;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Collections.Specialized;
+using Newtonsoft.Json;
 
 namespace CanBot.Services
 {
@@ -384,6 +386,43 @@ namespace CanBot.Services
             await args.Player.PlayAsync(track);
             //await args.Player.TextChannel.SendMessageAsync(embed: await EmbedHandler.CreateBasicEmbed("재생시작", $"[{track.Title}]({track.Url})", Color.Blue));
         }
+        public async Task<Embed> MC_WL(IGuild guild, string nickname)
+        {
+            StreamReader file = File.OpenText("mc.json");
+            JsonTextReader reader = new JsonTextReader(file);
+            JObject json = (JObject)JToken.ReadFrom(reader);
+
+            //체리터미널 키
+            string key;
+            try
+            {
+                //디코 서버 ID로 체리터미널 키 확인
+                key = json[guild.Id.ToString()].ToString();
+            }
+            catch (Exception)
+            {
+                //등록된 디코 서버가 아니면
+                return await EmbedHandler.CreateBasicEmbed("마인크래프트 화이트리스트", "해당 서버는 등록된 서버가 없습니다.\n" +
+                    "화이트리스트 기능을 사용하시려면 ``ㅇ고객지원`` >> 깡통이 >> #고객지원 으로 문의주세요.", Color.Blue);
+            }
+
+            WebClient wc = new WebClient();
+            var data = new NameValueCollection();
+            data["key"] = key;
+            data["command"] = "whitelist add " + nickname;
+
+            try
+            {
+                wc.UploadValues("https://api.wany.io/cherry/terminal/execute", "POST", data);
+            }
+            catch (Exception)
+            {
+                return await EmbedHandler.CreateBasicEmbed("마인크래프트 화이트리스트", $"서버에 오류가 발생했어요.\n" +
+                    $"잠시 후 다시 시도하세요.", Color.Blue);
+            }
+            return await EmbedHandler.CreateBasicEmbed("마인크래프트 화이트리스트",
+                $"서버에 화이트리스트를 추가했어요!\n디스코드 : {guild.Name}\n닉네임 : {nickname}", Color.Blue);
+        }
 
         public async Task<Embed> Fun(string cmd, string option = "")
         {
@@ -487,7 +526,7 @@ namespace CanBot.Services
             Document doc = NSoupClient.Parse(new Uri($"https://open.neis.go.kr/hub/schoolInfo?KEY=fe74198d943c4019b9f1a01de4feaae7&SCHUL_NM={school_str}"), 5000);
             string edu = doc.Select("ATPT_OFCDC_SC_CODE").Text;
             string school = doc.Select("SD_SCHUL_CODE").Text;
-
+            
             //급식 API 호출
             string date = DateTime.Now.ToString("yyyyMMdd");
             doc = NSoupClient.Parse(new Uri($"https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=fe74198d943c4019b9f1a01de4feaae7&ATPT_OFCDC_SC_CODE={edu}&SD_SCHUL_CODE={school}&MLSV_YMD={date}"), 5000);
@@ -539,5 +578,6 @@ namespace CanBot.Services
 
             return str_return;
         }
+
     }
 }
